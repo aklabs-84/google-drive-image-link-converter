@@ -44,7 +44,7 @@ const Header: React.FC = () => {
               className="hover:text-slate-900 transition-colors"
               title="AKLABS 홈페이지"
             >
-              <i className="fa-brands fa-github text-xl"></i>
+              <i className="fa-solid fa-globe text-xl"></i>
             </a>
           </div>
         </div>

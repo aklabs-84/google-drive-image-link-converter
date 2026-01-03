@@ -31,7 +31,7 @@ const WarningSection: React.FC = () => {
         <div className="bg-amber-100 p-2 rounded-lg text-amber-600">
           <i className="fa-solid fa-triangle-exclamation text-xl"></i>
         </div>
-        <h3 className="text-xl font-bold text-slate-800">⚠️ 사용 전 주의할 점</h3>
+        <h3 className="text-xl font-bold text-slate-800">사용 전 주의할 점</h3>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
