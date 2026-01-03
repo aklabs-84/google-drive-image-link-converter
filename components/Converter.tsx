@@ -27,11 +27,11 @@ const Converter: React.FC = () => {
   };
 
   const directLink = fileId ? `https://drive.google.com/uc?id=${fileId}` : '';
-  // 미리보기용으로는 더 안정적인 thumbnail API를 사용합니다. (sz=w1000은 고화질 요청)
-  const previewLink = fileId ? `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000` : '';
-  
-  const htmlTag = fileId ? `<img src="${directLink}">` : '';
-  const markdownTag = fileId ? `![이미지](${directLink})` : '';
+  // 마크다운/HTML 등에서 훨씬 더 안정적으로 보이고 보안 검사를 우회하는 Thumbnail API (추천)
+  const recommendedLink = fileId ? `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000` : '';
+
+  const htmlTag = fileId ? `<img src="${recommendedLink}">` : '';
+  const markdownTag = fileId ? `![이미지](${recommendedLink})` : '';
 
   const copyToClipboard = async (text: string, type: string) => {
     try {
@@ -61,7 +61,7 @@ const Converter: React.FC = () => {
             <i className="fa-solid fa-link text-lg"></i>
           </div>
         </div>
-        
+
         {inputValue && !fileId && (
           <p className="mt-3 text-red-500 text-sm flex items-center">
             <i className="fa-solid fa-circle-exclamation mr-1.5"></i>
@@ -72,42 +72,48 @@ const Converter: React.FC = () => {
 
       {fileId && (
         <div className="grid grid-cols-1 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <ResultBox 
+          <ResultBox
             title="직접 링크 (Direct URL)"
             value={directLink}
             onCopy={() => copyToClipboard(directLink, 'url')}
             isCopied={isCopied === 'url'}
           />
-          <ResultBox 
+          <ResultBox
+            title="추천 링크 (Bypass Thumbnail)"
+            value={recommendedLink}
+            onCopy={() => copyToClipboard(recommendedLink, 'recommended')}
+            isCopied={isCopied === 'recommended'}
+          />
+          <ResultBox
             title="HTML 태그"
             value={htmlTag}
             onCopy={() => copyToClipboard(htmlTag, 'html')}
             isCopied={isCopied === 'html'}
           />
-          <ResultBox 
+          <ResultBox
             title="마크다운 (Markdown)"
             value={markdownTag}
             onCopy={() => copyToClipboard(markdownTag, 'md')}
             isCopied={isCopied === 'md'}
           />
-          
+
           {/* 사용자 요청 디자인에 맞춘 이미지 미리보기 섹션 */}
           <div className="bg-[#f2f8ff] border border-[#dae9fb] rounded-xl p-6 flex flex-col sm:flex-row items-center sm:items-start space-y-4 sm:space-y-0 sm:space-x-6">
             <div className="flex-shrink-0 bg-white rounded-lg shadow-sm overflow-hidden w-28 h-28 flex items-center justify-center border border-[#cfe2f5]">
-               {!imgError ? (
-                 <img 
-                   src={previewLink} 
-                   alt="Preview" 
-                   className="w-full h-full object-cover"
-                   referrerPolicy="no-referrer"
-                   onError={() => setImgError(true)}
-                 />
-               ) : (
-                 <div className="flex flex-col items-center justify-center text-slate-300 p-4 text-center">
-                   <i className="fa-solid fa-image-slash text-xl mb-1 opacity-50"></i>
-                   <span className="text-[11px] font-medium leading-tight text-slate-400">이미지를<br/>불러올 수 없음</span>
-                 </div>
-               )}
+              {!imgError ? (
+                <img
+                  src={recommendedLink}
+                  alt="Preview"
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                  onError={() => setImgError(true)}
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center text-slate-300 p-4 text-center">
+                  <i className="fa-solid fa-image-slash text-xl mb-1 opacity-50"></i>
+                  <span className="text-[11px] font-medium leading-tight text-slate-400">이미지를<br />불러올 수 없음</span>
+                </div>
+              )}
             </div>
             <div className="text-center sm:text-left flex-grow self-center">
               <h4 className="font-bold text-[#23469e] text-[17px] mb-1.5">이미지 미리보기</h4>
