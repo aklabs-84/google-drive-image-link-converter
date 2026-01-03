@@ -26,14 +26,14 @@ const WarningSection: React.FC = () => {
   ];
 
   return (
-    <div className="mt-16 border-t border-slate-200 pt-10">
+    <div id="warning-section" className="mt-16 border-t border-slate-200 pt-10">
       <div className="flex items-center space-x-3 mb-6">
         <div className="bg-amber-100 p-2 rounded-lg text-amber-600">
           <i className="fa-solid fa-triangle-exclamation text-xl"></i>
         </div>
         <h3 className="text-xl font-bold text-slate-800">⚠️ 사용 전 주의할 점</h3>
       </div>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {warnings.map((w, idx) => (
           <div key={idx} className="bg-white p-4 rounded-xl border border-slate-100 flex items-start space-x-4 shadow-sm">
@@ -46,7 +46,7 @@ const WarningSection: React.FC = () => {
           </div>
         ))}
       </div>
-      
+
       <div className="mt-8 bg-slate-800 text-white rounded-2xl p-6 shadow-xl">
         <h4 className="font-bold mb-3 flex items-center">
           <i className="fa-solid fa-circle-question mr-2 text-blue-400"></i>
